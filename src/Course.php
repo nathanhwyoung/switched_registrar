@@ -82,14 +82,14 @@
 		// 	}
 		// 	return $courses;
 		// }
-		function getCourses()
+		function getStudents()
 		{
 			$students = array();
-			$results = $GLOBALS['DB']->query("SELECT students.* FROM
+			$returned_students = $GLOBALS['DB']->query("SELECT students.* FROM
 				courses JOIN registrar ON (courses.id = registrar.course_id)
 						 JOIN students ON (registrar.student_id = students.id)
 						WHERE courses.id = {$this->getId()};");
-			$returned_students = $results->fetchAll(PDO::FETCH_ASSOC);
+			var_dump($returned_students);
 			foreach($returned_students as $student) {
 				$student_name = $student['name'];
 				$enrollment_date = $student['enrollment_date'];
@@ -97,12 +97,12 @@
 				$new_student = new Student($student_name, $enrollment_date, $id);
 				array_push($students, $new_student);
 			}
-			return $courses;
+			return $students;
 		}
 		
 		function addStudent($student)
 		{
-			$GLOBALS['DB']-exec("INSERT INTO registrar (student_id, course_id) VALUES ({$student->getId()}, {$this->getId()});");
+			$GLOBALS['DB']->exec("INSERT INTO registrar (student_id, course_id) VALUES ({$student->getId()}, {$this->getId()});");
 		}
 		
 		static function find($search_id)

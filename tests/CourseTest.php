@@ -108,6 +108,6 @@
              
              $test_course->addStudent($test_student);
              
-             $this->assertEquals([$test_student], $test_course->getStudent());
+             $this->assertEquals([$test_student], $test_course->getStudents());
         }
 	}
