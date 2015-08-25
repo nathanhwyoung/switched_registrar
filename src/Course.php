@@ -85,11 +85,10 @@
 		function getCourses()
 		{
 			$students = array();
-			$results = $GLOBALS['DB']->query("
-				SELECT students.* FROM
+			$results = $GLOBALS['DB']->query("SELECT students.* FROM
 				courses JOIN registrar ON (courses.id = registrar.course_id)
 						 JOIN students ON (registrar.student_id = students.id)
-				WHERE course.id = {$this->getId()};");
+						WHERE courses.id = {$this->getId()};");
 			$returned_students = $results->fetchAll(PDO::FETCH_ASSOC);
 			foreach($returned_students as $student) {
 				$student_name = $student['name'];

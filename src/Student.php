@@ -63,35 +63,35 @@
 			$GLOBALS['DB']->exec("DELETE FROM students;");
 		}
 		
+		// function getCourses()
+		// {
+		// 	$query = $GLOBALS['DB']->query("SELECT course_id FROM registrar WHERE student_id = {$this->getId()};");
+		// 	$course_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+			
+		// 	$courses = array();
+		// 	foreach($course_ids as $id){
+		// 		$course_id = $id['course_id'];
+		// 		$result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$course_id};");
+				
+		// 		$returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
+		// 		$course_name = $returned_course[0]['name'];
+		// 		$course_number = $returned_course[0]['course_number'];
+		// 		$id = $returned_course[0]['id'];
+		// 		$new_course = new Course($course_name, $course_number, $id);
+		// 		array_push($courses, $new_course);
+		// 	}
+		// 	return $courses;
+		// }
+		
 		function getCourses()
 		{
-			$query = $GLOBALS['DB']->query("SELECT course_id FROM registrar WHERE student_id = {$this->getId()};");
-			$course_ids = $query->fetchAll(PDO::FETCH_ASSOC);
-			
 			$courses = array();
-			foreach($course_ids as $id){
-				$course_id = $id['course_id'];
-				$result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$course_id};");
-				
-				$returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
-				$course_name = $returned_course[0]['name'];
-				$course_number = $returned_course[0]['course_number'];
-				$id = $returned_course[0]['id'];
-				$new_course = new Course($course_name, $course_number, $id);
-				array_push($courses, $new_course);
-			}
-			return $courses;
-		}
-		function getCourses2()
-		{
-			$courses = array();
-			$results = $GLOBALS['DB']->query("
-				SELECT courses.* FROM
+			$results = $GLOBALS['DB']->query("SELECT courses.* FROM
 				students JOIN registrar ON (students.id = registrar.student_id)
 						 JOIN courses ON (registrar.course_id = courses.id)
-				WHERE student.id = {$this->getId()};");
-			$returned_courses = $results->fetchAll(PDO::FETCH_ASSOC);
-			foreach($returned_courses as $course) {
+						 WHERE students.id = {$this->getId()};");
+				var_dump($results);
+			foreach($results as $course) {
 				$course_name = $course['name'];
 				$course_number = $course['course_number'];
 				$id = $course['id'];
@@ -103,7 +103,7 @@
 		
 		function addCourse($course)
 		{
-			$GLOBALS['DB']-exec("INSERT INTO registrar (course_id, student_id) VALUES ({$course->getId()}, {$this->getId()});");
+			$GLOBALS['DB']->exec("INSERT INTO registrar (course_id, student_id) VALUES ({$course->getId()}, {$this->getId()});");
 		}
 		
 		static function find($search_id)
