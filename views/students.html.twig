@@ -1,0 +1,43 @@
+<html>
+<head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <title>Registrar</title>
+</head>
+<body>
+    <div class='container'>
+        <h1>Students</h1>
+
+        {% if students is not empty %}
+            <p>Here are all your students:</p>
+            <ul>
+                {% for student in students %}
+                    <li><a href="/students/{{ student.getId }}">{{ student.getName }}</a>
+                        <p>Enrolled: {{ student.getEnrollmentDate }}</p></li>
+
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/students' method='post'>
+            <label for='student_name'>New student:</label>
+            <input id='student_name' name='student_name' type='text' required>
+
+            <br>
+
+            <label for='date_enrolled'>Date Enrolled:</label>
+            <input id='date_enrolled' name='date_enrolled' type='date'>
+
+            <br>
+
+            <button type='submit' class="btn btn-primary">ADD</button>
+        </form>
+
+        <form action='/delete_students' method='post'>
+            <button type='submit' class="btn btn-primary">Clear</button>
+        </form>
+
+        <p><a href='/'>Home</a></p>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+<head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <title>Registrar</title>
+</head>
+<body>
+    <div class='container'>
+        <h1>Courses</h1>
+
+        {% if courses is not empty %}
+            <p>Here are all your courses:</p>
+            <ul>
+                {% for course in courses %}
+                    <li><a href="/course/{{ course.getId }}">{{ course.getName }} {{ course.getCourseNumber }}</a></li>
+
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/courses' method='post'>
+            <label for='course_name'>New Course:</label>
+            <input id='course_name' name='course_name' type='text' required>
+
+            <label for='course_number'>New Number:</label>
+            <input id='course_number' name='course_number' type='text' required>
+
+            <br>
+
+            <button type='submit' class="btn btn-primary">ADD</button>
+        </form>
+
+        <form action='/delete_courses' method='post'>
+            <button type='submit' class="btn btn-primary">Clear</button>
+        </form>
+
+        <p><a href='/'>Home</a></p>
+
+    </div>
+</body>
+</html>
